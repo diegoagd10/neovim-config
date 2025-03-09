@@ -1,0 +1,42 @@
+" Set the leader key to Space
+let mapleader=" "
+
+" Show line numbers
+set number
+" Show relative line numbers
+set relativenumber
+" Enable system clipboard integration
+set clipboard+=unnamedplus
+
+" Open the "Find Files" (Navigate > File) dialog with <Leader>ff (Space + ff)
+nnoremap <Leader>ff :action GotoFile<CR>
+
+" Open the "Find in Path" (Global Search) dialog with <Leader>fs (Space + fs)
+nnoremap <Leader>fs :action FindInPath<CR>
+
+" Open the Git tool window with Ctrl + p
+nnoremap <C-p> :action ActivateVersionControlToolWindow<CR>
+
+" Open the Rename Refactor dialog with <Leader>rn (Space + rn)
+nnoremap <Leader>rn :action RenameElement<CR>
+
+" Run the project with <Leader>r (Space + r)
+nnoremap <Leader>r :action Run<CR>
+
+" Open the "Choose Run Configuration" menu with <Leader>pc (Space + pc)
+nnoremap <Leader>pc :action ChooseRunConfiguration<CR>
+
+" Toggle the Project Explorer with <Leader>e (Space + e)
+nnoremap <Leader>e :action ActivateProjectToolWindow<CR>
+
+" Enable incremental search highlighting while typing
+set incsearch
+
+" Toggle the Terminal tool window with <Leader>tt (Space + tt)
+nnoremap <Leader>tt :action ActivateTerminalToolWindow<CR>
+
+" Move to the next tab with Ctrl + j
+nnoremap <C-j> :action NextTab<CR>
+
+" Move to the previous tab with Ctrl + k
+nnoremap <C-k> :action PreviousTab<CR>
