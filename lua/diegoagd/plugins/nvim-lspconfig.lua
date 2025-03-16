@@ -35,27 +35,28 @@ return {
 
     -- Make float window transparent end
     local on_attach = function(_, bufnr)
-      vim.keymap.set(
-        "n",
-        "K",
-        vim.lsp.buf.hover,
-        { buffer = bufnr, desc = "Show documentation for what is under cursor" }
-      )
-      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "Smart rename" })
-      vim.keymap.set(
-        { "n", "v" },
-        "gf",
-        vim.lsp.buf.code_action,
-        { buffer = bufnr, desc = "See available code actions" }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>d",
-        vim.diagnostic.open_float,
-        { buffer = bufnr, desc = "Show diagnostics for line" }
-      )
-      -- vim.keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", {buffer = bufnr, desc = 'Show definition, references'})
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr, desc = "Go to declaration" })
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to definition" })
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = bufnr, desc = "Go to implementation" })
+      vim.keymap.set("n", "<leader>td", vim.lsp.buf.type_definition, { buffer = bufnr, desc = "Go to type definition" })
+
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover text" })
+      vim.keymap.set("n", "<C-k>", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show signature" })
+
+      vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace folder" })
+      vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace folder" })
+      vim.keymap.set("n", "<leader>wl", function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, { buffer = bufnr, desc = "List workspace folders" })
+
+      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "Smart rename" })
+      vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "See available code actions" })
+
+      vim.keymap.set("n", "<leader>f", function()
+        vim.lsp.buf.format { async = true }
+      end, { buffer = bufnr, desc = "Format File" })
+
+      vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics for line" })
     end
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -112,7 +113,10 @@ return {
     })
 
     -- configure java jdtls
-    require("java").setup()
+    require("java").setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
     lspconfig.jdtls.setup({})
   end,
 }
