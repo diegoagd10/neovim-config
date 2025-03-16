@@ -10,21 +10,12 @@ return {
     local util = require("lspconfig.util")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-    -- Disable inline error messages
-    vim.diagnostic.config({
-      virtual_text = false,
-      float = {
-        border = "single",
-      },
-    })
-
     -- Add border to floating window
     vim.lsp.handlers["textDocument/signatureHelp"] =
-      vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silent = true })
+    vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silent = true })
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silend = true })
 
     -- Make float window transparent start
-
     local set_hl_for_floating_window = function()
       vim.api.nvim_set_hl(0, "NormalFloat", {
         link = "Normal",
@@ -43,8 +34,7 @@ return {
     })
 
     -- Make float window transparent end
-
-    local on_attach = function(client, bufnr)
+    local on_attach = function(_, bufnr)
       vim.keymap.set(
         "n",
         "K",
@@ -120,5 +110,9 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
     })
+
+    -- configure java jdtls
+    require("java").setup()
+    lspconfig.jdtls.setup({})
   end,
 }
