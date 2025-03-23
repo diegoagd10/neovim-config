@@ -32,7 +32,6 @@ let mapleader = " "
 
 "File navigation and formatting
 nnoremap <leader>pv :Ex<CR>
-nnoremap <leader>fj :%!prettier --parser json<CR>
 
 "Move selected lines up and down in visual mode
 vnoremap J :action MoveLineDown<CR>gv
@@ -97,6 +96,26 @@ nnoremap <leader>rf :action ShowReformatFileDialog<CR>
 "Comment lines
 nnoremap <leader>cm :action CommentByLineComment<CR>
 vnoremap <leader>cm :action CommentByLineComment<CR>
+
+"Debugging
+nnoremap <leader>db :action Debug<CR>
+nnoremap <leader>bp :action ToggleLineBreakpoint<CR>
+
+"Navigation (You can return to previous file using C+o)
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gD :action GotoTypeDeclaration<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gr :action GotoReferences<CR>
+nnoremap <leader>gs :action GotoSymbol<CR>
+nnoremap <leader>gS :action GotoSymbolInFile<CR>
+nnoremap K :action ParameterInfo<CR>
+
+nnoremap <leader>ec :action IntroduceConstant<CR>
+nnoremap <leader>ev :action IntroduceVariable<CR>
+nnoremap <leader>em :action ExtractFunction<CR>
+vnoremap <leader>ef :action IntroduceField<CR>
+nnoremap <leader>ep :action IntroduceParameter<CR>
+nnoremap <leader>mo :action Move<CR>
 
 "Plugins
 set surround
