@@ -78,11 +78,11 @@ nnoremap <leader>rc :action ChooseRunConfiguration<CR>
 "Toggle the Terminal tool window with <leader>tt (Space + tt)
 nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
 
-"Move to the next tab with Ctrl + j
-nnoremap <C-j> :action NextTab<CR>
+"Move to the next tab with Ctrl + l
+nnoremap <C-l> :action NextTab<CR>
 
-"Move to the previous tab with Ctrl + k
-nnoremap <C-k> :action PreviousTab<CR>
+"Move to the previous tab with Ctrl + h
+nnoremap <C-h> :action PreviousTab<CR>
 
 "Reload .ideavimrc file configuration
 nnoremap <leader>irc :action IdeaVim.ReloadVimRc.reload<CR>
