@@ -34,8 +34,8 @@ let mapleader = " "
 nnoremap <leader>pv :Ex<CR>
 
 "Move selected lines up and down in visual mode
-vnoremap J :action MoveLineDown<CR>gv
-vnoremap K :action MoveLineUp<CR>gv
+vnoremap J :action MoveLineDown<CR>
+vnoremap K :action MoveLineUp<CR>
 
 "Keep cursor centered when jumping half-pages
 nnoremap <C-d> <C-d>zz
