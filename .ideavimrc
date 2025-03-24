@@ -117,6 +117,19 @@ vnoremap <leader>ef :action IntroduceField<CR>
 nnoremap <leader>ep :action IntroduceParameter<CR>
 nnoremap <leader>mo :action Move<CR>
 
+" Splits
+nnoremap <leader>| :action SplitVertically<CR>
+nnoremap <leader>\ :action SplitVertically<CR>
+nnoremap <leader>t| :action MoveTabRight<CR>
+nnoremap <leader>t\ :action MoveTabRight<CR>
+
+nnoremap <leader>- :action SplitHorizontally<CR>
+nnoremap <leader>_ :action SplitHorizontally<CR>
+nnoremap <leader>t- :action MoveTabDown<CR>
+nnoremap <leader>t_ :action MoveTabDown<CR>
+
+nnoremap <leader>us :action UnsplitAll<CR>
+
 "Plugins
 set surround
 set NERDTree
