@@ -70,10 +70,13 @@ nnoremap <leader>rn :action RenameElement<CR>
 nnoremap <leader>rr :action Run<CR>
 
 "Run the current class"
-nnoremap <leader>ruc :action RunClass<CR>
+nnoremap <leader>ru :action RunClass<CR>
 
 "Open the "Choose Run Configuration" menu with <leader>rc (Space + rc)
-nnoremap <leader>rc :action ChooseRunConfiguration<CR>
+nnoremap <leader>src :action ChooseRunConfiguration<CR>
+
+"Open the "Create Run Configuration" menu with <leader>rc (Space + rc)
+nnoremap <leader>crc :action CreateRunConfiguration<CR>
 
 "Toggle the Terminal tool window with <leader>tt (Space + tt)
 nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
