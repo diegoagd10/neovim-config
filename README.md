@@ -21,7 +21,7 @@ cd ~/Projects/neovim-config
 # Create symlinks
 ln -s ~/Projects/neovim-config ~/.config/nvim
 ln -s ~/Projects/neovim-config/.vimrc ~/.vimrc
-ln -s ~/Projects/neovim-config/tmux.conf ~/.tmux.conf
+ln -s ~/Projects/neovim-config/.tmux.conf ~/.tmux.conf
 
 # Create required directories
 mkdir -p ~/.vim/undodir
@@ -51,7 +51,7 @@ For detailed setup instructions, see the individual sections below.
 - `vs-keybindings.json` - VS Code Vim keybindings
 
 **Tmux Configuration:**
-- `tmux.conf` - Tmux configuration with vim-style bindings
+- `.tmux.conf` - Tmux configuration with vim-style bindings
 
 **Documentation:**
 - `CLAUDE.md` - Development guide for working with this config
@@ -336,15 +336,15 @@ sudo apt install tmux
 [ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf.backup
 
 # Create symlink from this repository
-ln -s /path/to/neovim-config/tmux.conf ~/.tmux.conf
+ln -s /path/to/neovim-config/.tmux.conf ~/.tmux.conf
 
 # Example if this repo is at ~/Projects/neovim-config:
-# ln -s ~/Projects/neovim-config/tmux.conf ~/.tmux.conf
+# ln -s ~/Projects/neovim-config/.tmux.conf ~/.tmux.conf
 ```
 
 **Alternative: Copy the file:**
 ```bash
-cp /path/to/neovim-config/tmux.conf ~/.tmux.conf
+cp /path/to/neovim-config/.tmux.conf ~/.tmux.conf
 ```
 
 ### 3. Install TPM (Tmux Plugin Manager)
