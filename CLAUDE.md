@@ -4,7 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a personal Neovim configuration repository with cross-editor Vim keybindings. The configuration is structured as a modern Neovim setup using Lua, with the Lazy.nvim plugin manager. Additional configuration files provide consistent Vim bindings for IntelliJ IDEA (.ideavimrc) and VS Code (vs-settings.json, vs-keybindings.json).
+This is a unified configuration repository for Neovim, Vim, and tmux with consistent keybindings across all tools. The repository includes:
+- Modern Neovim setup using Lua with Lazy.nvim plugin manager
+- Cross-editor Vim keybindings for IntelliJ IDEA (.ideavimrc) and VS Code (vs-settings.json, vs-keybindings.json)
+- Pure Vim configuration (.vimrc) mirroring Neovim keybindings
+- Comprehensive tmux configuration (.tmux.conf) with vim-tmux-navigator integration
 
 ## Architecture
 
@@ -36,6 +40,13 @@ This is a personal Neovim configuration repository with cross-editor Vim keybind
 - `nvim-autopairs.lua`: Auto-close brackets and quotes
 - `colors.lua`: Color scheme configuration
 - `indent.lua`: Indentation guides
+
+### Tmux Configuration (`.tmux.conf`)
+- **Prefix Key**: `Ctrl+Space` (matches Neovim leader key)
+- **Plugin Manager**: TPM (Tmux Plugin Manager) - plugins defined at bottom of file
+- **Key Plugin**: `christoomey/vim-tmux-navigator` - enables seamless Ctrl+h/j/k/l navigation between tmux panes and Neovim splits
+- **Pane Resizing**: Uses uppercase `H/J/K/L` (without Ctrl) to avoid conflicts with vim-tmux-navigator
+- **Status Bar**: Displays hostname, day, date, and time in 12-hour AM/PM format (e.g., "hostname Sun Nov 9 4:52 PM")
 
 ## Common Keybindings (Space is Leader)
 
@@ -93,6 +104,13 @@ These keybindings are consistent across Neovim, IntelliJ IDEA, and VS Code:
 - Neovim: Edit `lua/diegoagd/core/keymaps.lua` for global bindings, or plugin-specific files for plugin bindings
 - IntelliJ IDEA: Edit `.ideavimrc`
 - VS Code: Edit `vs-settings.json` under `vim.normalModeKeyBindings` or `vim.visualModeKeyBindings`
+- Tmux: Edit `.tmux.conf`, then reload with `Ctrl+Space + r` or `tmux source-file ~/.tmux.conf`
+
+### Modifying Tmux Configuration
+1. Edit `.tmux.conf` in the repository
+2. Reload config: `Ctrl+Space + r` from within tmux, or `tmux source-file ~/.tmux.conf` from terminal
+3. For TPM plugin changes: Press `Ctrl+Space + I` (capital I) to install new plugins
+4. **Important**: When modifying pane navigation or resizing, remember that `Ctrl+h/j/k/l` is reserved for vim-tmux-navigator. Use uppercase letters or other keys for pane operations.
 
 ## Configuration Conventions
 
@@ -101,3 +119,14 @@ These keybindings are consistent across Neovim, IntelliJ IDEA, and VS Code:
 - LSP keybindings are buffer-local and set in the `on_attach` function
 - Keep consistency between editor configurations where possible
 - Leader key is always space across all editors
+- Tmux prefix is `Ctrl+Space` to match Neovim leader key
+- The actual config file is `.tmux.conf` (with dot) - this is what tmux loads from `~/.tmux.conf`
+
+## Symlink Setup
+
+This repository is designed to be cloned and symlinked to standard config locations:
+- `~/.config/nvim` → `/path/to/neovim-config`
+- `~/.vimrc` → `/path/to/neovim-config/.vimrc`
+- `~/.tmux.conf` → `/path/to/neovim-config/.tmux.conf`
+
+When modifying configs, edit the files in this repository - changes will automatically apply via symlinks.
