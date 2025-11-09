@@ -31,6 +31,8 @@ This is a personal Neovim configuration repository with cross-editor Vim keybind
 - `nvim-cmp.lua`: Autocompletion with LSP, snippets, buffer, and path sources
   - Tab/Shift-Tab for completion navigation
 - `telescope.lua`: Fuzzy finder for files and text search
+- `vim-tmux-navigator.lua`: Seamless navigation between Neovim splits and tmux panes
+  - Ctrl+h/j/k/l navigation works across Neovim and tmux
 - `nvim-autopairs.lua`: Auto-close brackets and quotes
 - `colors.lua`: Color scheme configuration
 - `indent.lua`: Indentation guides
@@ -61,7 +63,8 @@ These keybindings are consistent across Neovim, IntelliJ IDEA, and VS Code:
 - `<leader>s`: Find and replace current word
 
 ### Window Management
-- `<C-h>/<C-l>`: Navigate to previous/next tab
+- `<C-h/j/k/l>`: Navigate between windows/panes (works seamlessly with tmux)
+- `<leader>th/<leader>tl>`: Navigate to previous/next tab (Vim only)
 - `<leader>|` or `<leader>\`: Split vertically
 - `<leader>-` or `<leader>_`: Split horizontally
 - `<leader>us`: Unsplit all

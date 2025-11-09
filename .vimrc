@@ -122,9 +122,26 @@ vnoremap <leader>d "_d
 " Find and replace current word
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 
-" Window navigation
-nnoremap <C-h> :tabprevious<CR>
-nnoremap <C-l> :tabnext<CR>
+" Tab navigation (using leader key to avoid conflict with window navigation)
+nnoremap <leader>th :tabprevious<CR>
+nnoremap <leader>tl :tabnext<CR>
+
+" Window/Pane navigation with vim-tmux-navigator support
+" These keybindings work seamlessly with tmux when using the vim-tmux-navigator plugin
+" If not in tmux, they fall back to regular vim window navigation
+if exists('$TMUX')
+  " When in tmux, let tmux handle the navigation
+  nnoremap <silent> <C-h> :silent !tmux select-pane -L<CR>:redraw!<CR>
+  nnoremap <silent> <C-j> :silent !tmux select-pane -D<CR>:redraw!<CR>
+  nnoremap <silent> <C-k> :silent !tmux select-pane -U<CR>:redraw!<CR>
+  nnoremap <silent> <C-l> :silent !tmux select-pane -R<CR>:redraw!<CR>
+else
+  " When not in tmux, use regular vim window navigation
+  nnoremap <C-h> <C-w>h
+  nnoremap <C-j> <C-w>j
+  nnoremap <C-k> <C-w>k
+  nnoremap <C-l> <C-w>l
+endif
 
 " Split windows
 nnoremap <leader>\| :vsplit<CR>
