@@ -85,10 +85,10 @@ Note: These work **without** the prefix key and seamlessly navigate between tmux
 ### Pane Management
 - `Ctrl+Space` + `|` or `\` - Split pane vertically
 - `Ctrl+Space` + `-` or `_` - Split pane horizontally
-- `Ctrl+Space` + `Ctrl+h/j/k/l` - Resize pane (vim directions)
+- `Ctrl+Space` + `H/J/K/L` - Resize pane (vim directions)
 - `Ctrl+Space` + `b` - Break pane into new window
-- `Ctrl+Space` + `j` - Join pane from another window (horizontal)
-- `Ctrl+Space` + `J` - Join pane from another window (vertical)
+- `Ctrl+Space` + `C` - Join pane from another window (horizontal)
+- `Ctrl+Space` + `M` - Join pane from another window (vertical)
 
 ### Marked Pane Navigation
 - `Ctrl+Space` + `m` - Mark current pane
