@@ -39,3 +39,9 @@ luac.out
 *.x86_64
 *.hex
 
+# Neovim auto-generated files
+lazy-lock.json
+plugin/
+
+# macOS
+.DS_Store
