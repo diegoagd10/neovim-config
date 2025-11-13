@@ -8,5 +8,6 @@ return {
     vim.keymap.set("n", "<leader>fs", function()
       builtin.grep_string({ search = vim.fn.input("Grep > ") })
     end, { desc = "Search with Grep" })
+    vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find Buffers" })
   end,
 }

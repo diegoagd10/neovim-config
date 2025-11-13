@@ -39,7 +39,7 @@ return {
       vim.keymap.set("n", "<leader>td", vim.lsp.buf.type_definition, { buffer = bufnr, desc = "Go to type definition" })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover text" })
-      vim.keymap.set("n", "<C-k>", vim.lsp.buf.hover, { buffer = bufnr, desc = "Show signature" })
+      vim.keymap.set("n", "<leader>k", vim.lsp.buf.signature_help, { buffer = bufnr, desc = "Show signature help" })
 
       vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = "Add workspace folder" })
       vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = "Remove workspace folder" })
@@ -54,7 +54,7 @@ return {
         vim.lsp.buf.format { async = true }
       end, { buffer = bufnr, desc = "Format File" })
 
-      vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics for line" })
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics for line" })
     end
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
