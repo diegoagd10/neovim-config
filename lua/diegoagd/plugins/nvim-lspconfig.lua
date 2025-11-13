@@ -6,13 +6,11 @@ return {
   },
   enabled = true,
   config = function()
-    local lspconfig = require("lspconfig")
-    local util = require("lspconfig.util")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
     -- Add border to floating window
     vim.lsp.handlers["textDocument/signatureHelp"] =
-    vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silent = true })
+      vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silent = true })
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single", silend = true })
 
     -- Make float window transparent start
@@ -60,36 +58,36 @@ return {
     end
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
-    local signs = { Error = "✖", Warn = "", Hint = "󰠠", Info = "" }
+    local signs = { Error = "✖", Warn = "", Hint = "󰠠", Info = "" }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    -- configure typescript server with plugin
-    lspconfig["ts_ls"].setup({
+    -- Configure TypeScript server (new API)
+    vim.lsp.config("ts_ls", {
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure html server
-    lspconfig["html"].setup({
+    -- Configure HTML server (new API)
+    vim.lsp.config("html", {
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure angular server
-    lspconfig["angularls"].setup({
+    -- Configure Angular server with custom root_dir (new API)
+    vim.lsp.config("angularls", {
       capabilities = capabilities,
       on_attach = on_attach,
-      root_dir = util.root_pattern("angular.json", "project.json", "nx.json"),
+      root_markers = { "angular.json", "project.json", "nx.json" },
     })
 
-    -- configure lua server (with special settings)
-    lspconfig["lua_ls"].setup({
+    -- Configure Lua server with special settings (new API)
+    vim.lsp.config("lua_ls", {
       capabilities = capabilities,
       on_attach = on_attach,
-      settings = { -- custom settings for lua
+      settings = {
         Lua = {
           -- make the language server recognize "vim" global
           diagnostics = {
@@ -106,17 +104,30 @@ return {
       },
     })
 
-    -- configure css server
-    lspconfig["cssls"].setup({
+    -- Configure CSS server (new API)
+    vim.lsp.config("cssls", {
       capabilities = capabilities,
       on_attach = on_attach,
     })
 
-    -- configure java jdtls
-    require("java").setup({
+    -- Configure Python server with settings (new API)
+    vim.lsp.config("pyright", {
       capabilities = capabilities,
       on_attach = on_attach,
+      settings = {
+        python = {
+          analysis = {
+            typeCheckingMode = "basic",
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+          },
+        },
+      },
     })
-    lspconfig.jdtls.setup({})
+
+    -- Enable all configured LSP servers (new API)
+    vim.lsp.enable({ "ts_ls", "html", "angularls", "lua_ls", "cssls", "pyright" })
+
+    -- Note: Java (jdtls) is handled by nvim-java plugin
   end,
 }

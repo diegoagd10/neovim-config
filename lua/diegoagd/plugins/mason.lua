@@ -18,7 +18,7 @@ return {
         "lua_ls",
         "html",
         "cssls",
-        "jdtls",
+        "pyright",
       },
       automatic_installation = true,
     })
@@ -29,6 +29,8 @@ return {
         "stylua",
         "eslint_d",
         "prettierd",
+        "black",
+        "ruff",
       },
     })
   end,
