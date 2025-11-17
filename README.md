@@ -6,6 +6,11 @@ This repository contains a modern Neovim configuration with LSP support, autocom
 
 ## Quick Start
 
+**Install build dependencies first:**
+```bash
+sudo apt update && sudo apt install -y build-essential curl tar git wget
+```
+
 Clone this repository and symlink all configurations at once:
 
 ```bash
@@ -65,7 +70,21 @@ This is a fully-configured Neovim setup using Lua with the Lazy.nvim plugin mana
 
 ## Installation
 
-### 1. Install Neovim
+### 1. Install Build Dependencies
+
+Neovim plugins (especially nvim-treesitter) require a C compiler and additional tools to build native parsers:
+
+```bash
+sudo apt update && sudo apt install -y build-essential curl tar git wget
+```
+
+This installs:
+- `build-essential`: C compiler (`gcc`, `g++`, `make`)
+- `curl`, `wget`: For downloading parser files
+- `tar`: For extracting parser archives
+- `git`: For cloning repositories
+
+### 2. Install Neovim
 
 **Latest Stable via PPA (Recommended):**
 ```bash
@@ -86,7 +105,7 @@ sudo apt install neovim
 nvim --version
 ```
 
-### 2. Install This Configuration
+### 3. Install This Configuration
 
 **Backup existing configuration (if any):**
 ```bash
@@ -127,7 +146,7 @@ cp lazy-lock.json ~/.config/nvim/
 cp -r lua ~/.config/nvim/
 ```
 
-### 3. Install Plugins and LSP Servers
+### 4. Install Plugins and LSP Servers
 
 Start Neovim:
 ```bash
@@ -142,7 +161,7 @@ Lazy.nvim will automatically:
 
 This may take a few minutes on first launch. Once complete, restart Neovim.
 
-### 4. Verify Installation
+### 5. Verify Installation
 
 Check that everything is installed correctly:
 
@@ -198,6 +217,33 @@ Update all plugins:
 ```
 
 ## Troubleshooting
+
+### C Compiler Errors ("No C compiler found!")
+
+If you see errors like "No C compiler found! 'gcc', 'clang', 'cc' are not executable", install build tools:
+
+```bash
+sudo apt update && sudo apt install -y build-essential curl tar git wget
+```
+
+After installation, close and reopen Neovim. This is required for Treesitter and other plugins that compile native code.
+
+### Treesitter Parser Installation Errors
+
+If you see errors like "Error during tarball extraction" or "Cannot open: No such file or directory":
+
+1. Install missing dependencies:
+```bash
+sudo apt install -y curl tar git wget
+```
+
+2. Clear the Treesitter cache:
+```bash
+rm -rf ~/.local/share/nvim/lazy/nvim-treesitter
+rm -rf ~/.cache/nvim/treesitter
+```
+
+3. Restart Neovim - parsers will reinstall automatically
 
 ### LSP Servers Not Working
 Check Mason installation status:
