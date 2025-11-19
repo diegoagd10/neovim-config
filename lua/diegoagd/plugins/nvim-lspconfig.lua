@@ -125,8 +125,14 @@ return {
       },
     })
 
+    -- Configure Ruff LSP for Python linting and formatting (new API)
+    vim.lsp.config("ruff", {
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- Enable all configured LSP servers (new API)
-    vim.lsp.enable({ "ts_ls", "html", "angularls", "lua_ls", "cssls", "pyright" })
+    vim.lsp.enable({ "ts_ls", "html", "angularls", "lua_ls", "cssls", "pyright", "ruff" })
 
     -- Note: Java (jdtls) is handled by nvim-java plugin
   end,

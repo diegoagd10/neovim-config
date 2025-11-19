@@ -19,6 +19,7 @@ return {
         "html",
         "cssls",
         "pyright",
+        "ruff",
       },
       automatic_installation = true,
     })
