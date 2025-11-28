@@ -6,6 +6,49 @@ return {
   },
   enabled = true,
   config = function()
+    -- Auto-install pylsp-rope if pylsp is installed but rope plugin is missing
+    local function ensure_pylsp_rope()
+      local pylsp_path = vim.fn.stdpath("data") .. "/mason/packages/python-lsp-server"
+      local venv_pip = pylsp_path .. "/venv/bin/pip"
+
+      -- Check if pylsp is installed
+      if vim.fn.isdirectory(pylsp_path) == 1 and vim.fn.executable(venv_pip) == 1 then
+        -- Check if pylsp-rope is already installed
+        local check_cmd = string.format("%s list 2>/dev/null | grep -q pylsp-rope", venv_pip)
+        local result = vim.fn.system(check_cmd)
+
+        if vim.v.shell_error ~= 0 then
+          -- pylsp-rope not found, install it
+          vim.notify("Installing pylsp-rope for refactoring support...", vim.log.levels.INFO)
+          local install_cmd = string.format("%s install pylsp-rope", venv_pip)
+          vim.fn.jobstart(install_cmd, {
+            on_exit = function(_, exit_code)
+              if exit_code == 0 then
+                vim.notify("pylsp-rope installed successfully! Restart Neovim to enable refactoring.", vim.log.levels.INFO)
+              else
+                vim.notify("Failed to install pylsp-rope", vim.log.levels.ERROR)
+              end
+            end,
+          })
+        end
+      end
+    end
+
+    -- Run check after Mason installs packages
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "MasonToolsUpdateCompleted",
+      callback = ensure_pylsp_rope,
+      desc = "Auto-install pylsp-rope after Mason updates",
+    })
+
+    -- Also run on VimEnter in case pylsp is already installed
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        vim.defer_fn(ensure_pylsp_rope, 1000)  -- Delay 1 second to let Mason initialize
+      end,
+      desc = "Ensure pylsp-rope is installed on startup",
+    })
+
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
     -- Add border to floating window
@@ -131,8 +174,31 @@ return {
       on_attach = on_attach,
     })
 
+    -- Configure Python LSP Server with rope for refactoring (new API)
+    vim.lsp.config("pylsp", {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        pylsp = {
+          plugins = {
+            -- Enable rope for refactoring (extract method, etc.)
+            rope_autoimport = { enabled = true },
+            rope_completion = { enabled = true },
+            rope_refactoring = { enabled = true },  -- This enables extract method/variable
+            -- Disable conflicting plugins since we use pyright and ruff
+            pycodestyle = { enabled = false },
+            mccabe = { enabled = false },
+            pyflakes = { enabled = false },
+            pylint = { enabled = false },
+            autopep8 = { enabled = false },
+            yapf = { enabled = false },
+          },
+        },
+      },
+    })
+
     -- Enable all configured LSP servers (new API)
-    vim.lsp.enable({ "ts_ls", "html", "angularls", "lua_ls", "cssls", "pyright", "ruff" })
+    vim.lsp.enable({ "ts_ls", "html", "angularls", "lua_ls", "cssls", "pyright", "ruff", "pylsp" })
 
     -- Note: Java (jdtls) is handled by nvim-java plugin
   end,

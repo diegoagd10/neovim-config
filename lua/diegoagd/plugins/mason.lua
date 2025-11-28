@@ -20,6 +20,7 @@ return {
         "cssls",
         "pyright",
         "ruff",
+        "pylsp",
       },
       automatic_installation = true,
     })
