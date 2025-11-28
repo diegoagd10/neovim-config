@@ -98,6 +98,11 @@ return {
       end, { buffer = bufnr, desc = "Format File" })
 
       vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { buffer = bufnr, desc = "Show diagnostics for line" })
+
+      vim.keymap.set("n", "<leader>lr", function()
+        vim.cmd("LspRestart")
+        vim.notify("LSP client restarted", vim.log.levels.INFO)
+      end, { buffer = bufnr, desc = "Restart LSP client" })
     end
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
