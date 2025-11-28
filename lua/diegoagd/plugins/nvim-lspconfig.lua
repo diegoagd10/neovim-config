@@ -204,7 +204,5 @@ return {
 
     -- Enable all configured LSP servers (new API)
     vim.lsp.enable({ "ts_ls", "html", "angularls", "lua_ls", "cssls", "pyright", "ruff", "pylsp" })
-
-    -- Note: Java (jdtls) is handled by nvim-java plugin
   end,
 }

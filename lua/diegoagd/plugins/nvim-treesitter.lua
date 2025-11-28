@@ -30,7 +30,6 @@ return {
         "tsx",
         "html",
         "css",
-        "java",
         "json",
         "yaml",
         "markdown",
