@@ -40,7 +40,10 @@ set ignorecase
 set smartcase
 
 " UI Settings
-set termguicolors
+" Only enable termguicolors if terminal supports it
+if has('termguicolors') && ($TERM =~# 'truecolor' || $TERM =~# '256color' || $COLORTERM ==# 'truecolor')
+  set termguicolors
+endif
 set scrolloff=8
 set signcolumn=yes
 set updatetime=50
@@ -208,11 +211,36 @@ nnoremap <leader>rf gg=G<C-o><C-o>
 " Enable syntax highlighting
 syntax enable
 
-" Set color scheme (uncomment your preferred scheme)
-" colorscheme desert
-" colorscheme molokai
-" colorscheme gruvbox
-" colorscheme onedark
+" Set background
+set background=dark
+
+" Set color scheme with fallback
+" Try to use a built-in color scheme that works well on macOS
+if !empty(globpath(&rtp, 'colors/gruvbox.vim'))
+  colorscheme gruvbox
+elseif !empty(globpath(&rtp, 'colors/desert.vim'))
+  colorscheme desert
+elseif !empty(globpath(&rtp, 'colors/slate.vim'))
+  colorscheme slate
+else
+  " Fallback to a safe built-in scheme
+  colorscheme default
+  " Fix ugly default colors
+  hi Normal ctermbg=NONE guibg=NONE
+  hi LineNr ctermfg=grey guifg=grey
+  hi Comment ctermfg=darkgrey guifg=darkgrey
+endif
+
+" Additional color fixes for better visibility
+" Fix ugly green and cyan colors that are hard to read
+hi String ctermfg=cyan guifg=#8ec07c
+hi Number ctermfg=magenta guifg=#d3869b
+hi Identifier ctermfg=blue guifg=#83a598
+hi Statement ctermfg=yellow guifg=#fabd2f
+hi Type ctermfg=yellow guifg=#fabd2f
+hi Special ctermfg=red guifg=#fb4934
+hi Function ctermfg=green guifg=#b8bb26
+hi Constant ctermfg=magenta guifg=#d3869b
 
 " Highlight yanked text (Vim 8.0.1394+)
 if exists('##TextYankPost')
