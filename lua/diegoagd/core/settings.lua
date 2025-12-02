@@ -28,6 +28,10 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
+
+-- Clipboard configuration (works cross-platform)
+vim.opt.clipboard = "unnamedplus"
+
 vim.g.mapleader = " "
 
 -- Auto-reload files changed outside Neovim
