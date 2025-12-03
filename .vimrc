@@ -28,15 +28,8 @@ set nowrap
 " File handling
 set noswapfile
 set nobackup
-if has('persistent_undo')
-  " Expand home directory properly and create if doesn't exist
-  let undodir = expand('~/.vim/undodir')
-  if !isdirectory(undodir)
-    call mkdir(undodir, 'p', 0700)
-  endif
-  let &undodir = undodir
-  set undofile
-endif
+" Disable persistent undo to avoid path issues
+set noundofile
 
 " Search settings
 set nohlsearch
@@ -45,10 +38,9 @@ set ignorecase
 set smartcase
 
 " UI Settings
-" Only enable termguicolors if terminal supports it
-if has('termguicolors') && ($TERM =~# 'truecolor' || $TERM =~# '256color' || $COLORTERM ==# 'truecolor')
-  set termguicolors
-endif
+" Disable termguicolors for better compatibility
+set notermguicolors
+set t_Co=256
 set scrolloff=8
 set signcolumn=yes
 set updatetime=50
@@ -219,41 +211,34 @@ syntax enable
 " Set background
 set background=dark
 
-" Set color scheme with fallback
-" Try to use a color scheme that works well on both macOS and Linux
-silent! colorscheme gruvbox
+" Set color scheme - use elflord which is a built-in dark scheme
+try
+  colorscheme elflord
+catch
+  colorscheme default
+endtry
 
-" If gruvbox not found, try desert or elflord (built-in schemes)
-if !exists('g:colors_name') || g:colors_name !=# 'gruvbox'
-  try
-    colorscheme desert
-  catch
-    try
-      colorscheme elflord
-    catch
-      colorscheme default
-    endtry
-  endtry
-endif
-
-" Additional color fixes for better visibility on all platforms
-" Override ugly default colors regardless of color scheme
-hi Normal ctermbg=NONE guibg=NONE
-hi LineNr ctermfg=242 ctermbg=NONE guifg=#928374 guibg=NONE
-hi CursorLineNr ctermfg=yellow ctermbg=NONE guifg=#fabd2f guibg=NONE
-hi Comment ctermfg=242 guifg=#928374
-hi String ctermfg=108 guifg=#8ec07c
-hi Number ctermfg=175 guifg=#d3869b
-hi Identifier ctermfg=109 cterm=NONE guifg=#83a598 gui=NONE
-hi Statement ctermfg=214 guifg=#fabd2f
-hi Type ctermfg=214 guifg=#fabd2f
-hi Special ctermfg=167 guifg=#fb4934
-hi Function ctermfg=142 guifg=#b8bb26
-hi Constant ctermfg=175 guifg=#d3869b
-hi PreProc ctermfg=208 guifg=#fe8019
-hi ColorColumn ctermbg=237 guibg=#3c3836
-hi SignColumn ctermbg=NONE guibg=NONE
-hi VertSplit ctermfg=237 ctermbg=NONE guifg=#3c3836 guibg=NONE
+" Custom color overrides for better readability
+" Use only cterm colors (256-color) for maximum compatibility
+hi Normal ctermbg=NONE
+hi LineNr ctermfg=DarkGrey ctermbg=NONE
+hi CursorLineNr ctermfg=Yellow ctermbg=NONE
+hi Comment ctermfg=DarkGrey
+hi String ctermfg=Cyan
+hi Number ctermfg=Magenta
+hi Identifier ctermfg=Blue cterm=NONE
+hi Statement ctermfg=Yellow cterm=bold
+hi Type ctermfg=Green
+hi Special ctermfg=Red
+hi Function ctermfg=Green
+hi Constant ctermfg=Magenta
+hi PreProc ctermfg=Blue
+hi ColorColumn ctermbg=DarkGrey
+hi SignColumn ctermbg=NONE
+hi VertSplit ctermfg=DarkGrey ctermbg=NONE
+hi Visual ctermbg=DarkGrey
+hi Search ctermbg=Yellow ctermfg=Black
+hi IncSearch ctermbg=Green ctermfg=Black
 
 " Highlight yanked text (Vim 8.0.1394+)
 if exists('##TextYankPost')
