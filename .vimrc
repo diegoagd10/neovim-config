@@ -29,7 +29,12 @@ set nowrap
 set noswapfile
 set nobackup
 if has('persistent_undo')
-  set undodir=~/.vim/undodir
+  " Expand home directory properly and create if doesn't exist
+  let undodir = expand('~/.vim/undodir')
+  if !isdirectory(undodir)
+    call mkdir(undodir, 'p', 0700)
+  endif
+  let &undodir = undodir
   set undofile
 endif
 
@@ -215,32 +220,40 @@ syntax enable
 set background=dark
 
 " Set color scheme with fallback
-" Try to use a built-in color scheme that works well on macOS
-if !empty(globpath(&rtp, 'colors/gruvbox.vim'))
-  colorscheme gruvbox
-elseif !empty(globpath(&rtp, 'colors/desert.vim'))
-  colorscheme desert
-elseif !empty(globpath(&rtp, 'colors/slate.vim'))
-  colorscheme slate
-else
-  " Fallback to a safe built-in scheme
-  colorscheme default
-  " Fix ugly default colors
-  hi Normal ctermbg=NONE guibg=NONE
-  hi LineNr ctermfg=grey guifg=grey
-  hi Comment ctermfg=darkgrey guifg=darkgrey
+" Try to use a color scheme that works well on both macOS and Linux
+silent! colorscheme gruvbox
+
+" If gruvbox not found, try desert or elflord (built-in schemes)
+if !exists('g:colors_name') || g:colors_name !=# 'gruvbox'
+  try
+    colorscheme desert
+  catch
+    try
+      colorscheme elflord
+    catch
+      colorscheme default
+    endtry
+  endtry
 endif
 
-" Additional color fixes for better visibility
-" Fix ugly green and cyan colors that are hard to read
-hi String ctermfg=cyan guifg=#8ec07c
-hi Number ctermfg=magenta guifg=#d3869b
-hi Identifier ctermfg=blue guifg=#83a598
-hi Statement ctermfg=yellow guifg=#fabd2f
-hi Type ctermfg=yellow guifg=#fabd2f
-hi Special ctermfg=red guifg=#fb4934
-hi Function ctermfg=green guifg=#b8bb26
-hi Constant ctermfg=magenta guifg=#d3869b
+" Additional color fixes for better visibility on all platforms
+" Override ugly default colors regardless of color scheme
+hi Normal ctermbg=NONE guibg=NONE
+hi LineNr ctermfg=242 ctermbg=NONE guifg=#928374 guibg=NONE
+hi CursorLineNr ctermfg=yellow ctermbg=NONE guifg=#fabd2f guibg=NONE
+hi Comment ctermfg=242 guifg=#928374
+hi String ctermfg=108 guifg=#8ec07c
+hi Number ctermfg=175 guifg=#d3869b
+hi Identifier ctermfg=109 cterm=NONE guifg=#83a598 gui=NONE
+hi Statement ctermfg=214 guifg=#fabd2f
+hi Type ctermfg=214 guifg=#fabd2f
+hi Special ctermfg=167 guifg=#fb4934
+hi Function ctermfg=142 guifg=#b8bb26
+hi Constant ctermfg=175 guifg=#d3869b
+hi PreProc ctermfg=208 guifg=#fe8019
+hi ColorColumn ctermbg=237 guibg=#3c3836
+hi SignColumn ctermbg=NONE guibg=NONE
+hi VertSplit ctermfg=237 ctermbg=NONE guifg=#3c3836 guibg=NONE
 
 " Highlight yanked text (Vim 8.0.1394+)
 if exists('##TextYankPost')
