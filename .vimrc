@@ -52,11 +52,6 @@ set guicursor=
 " Enable mouse support
 set mouse=a
 
-" Clipboard settings
-if has('clipboard')
-  set clipboard=unnamedplus
-endif
-
 " Better command-line completion
 set wildmenu
 set wildmode=longest:full,full
