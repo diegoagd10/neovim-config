@@ -158,6 +158,12 @@ return {
       on_attach = on_attach,
     })
 
+    -- Configure Astro server (new API)
+    vim.lsp.config("astro", {
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
     -- Configure Python server with settings (new API)
     vim.lsp.config("pyright", {
       capabilities = capabilities,
@@ -203,6 +209,6 @@ return {
     })
 
     -- Enable all configured LSP servers (new API)
-    vim.lsp.enable({ "ts_ls", "html", "angularls", "lua_ls", "cssls", "pyright", "ruff", "pylsp" })
+    vim.lsp.enable({ "ts_ls", "html", "angularls", "astro", "lua_ls", "cssls", "pyright", "ruff", "pylsp" })
   end,
 }

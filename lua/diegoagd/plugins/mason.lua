@@ -15,6 +15,7 @@ return {
       ensure_installed = {
         "ts_ls",
         "angularls",
+        "astro",
         "lua_ls",
         "html",
         "cssls",
