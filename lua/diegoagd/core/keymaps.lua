@@ -25,4 +25,4 @@ vim.keymap.set("v", "<leader>s", [["hy:%s/<C-r>h/<C-r>h/gI<Left><Left><Left>]])
 -- Buffer navigation
 vim.keymap.set("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer" })
-vim.keymap.set("n", "<leader>x", ":bdelete<CR>", { desc = "Close buffer" })
+vim.keymap.set("n", "<leader>x", "<cmd>bp|bd #<CR>", { desc = "Close current buffer" })
