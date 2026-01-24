@@ -26,5 +26,13 @@ return {
         },
       },
     })
+
+    -- Keybindings for moving buffers
+    local keymap = vim.keymap
+    
+    keymap.set("n", "<leader>bl", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer left" })
+    keymap.set("n", "<leader>br", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer right" })
+    keymap.set("n", "<leader>bp", "<cmd>BufferLinePick<CR>", { desc = "Pick buffer to jump to" })
+    keymap.set("n", "<leader>bc", "<cmd>BufferLinePickClose<CR>", { desc = "Pick buffer to close" })
   end,
 }
