@@ -98,6 +98,10 @@ return {
           renameFilesWithClasses = "prompt",
           enableSnippets = true,
           updateImportsOnRename = true,
+          -- Ensure all diagnostics are shown
+          lineLength = 120,
+          analysisExcludedFolders = {},
+          enableSdkFormatter = true,
         },
       },
     })
