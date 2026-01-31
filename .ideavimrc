@@ -1,141 +1,187 @@
-"Line numbers
+" ============================================
+" IdeaVim Configuration - Matching Neovim Setup
+" ============================================
+
+" --- Basic Settings ---
 set number
 set relativenumber
-
-"Disable line wrapping
 set nowrap
-
-"File management
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
-
-"Search settings
 set nohlsearch
 set incsearch
-
-"Enable true colors
 set termguicolors
-
-"UI settings
 set scrolloff=8
 set signcolumn=yes
-set isfname+=@-@
-
-"Performance and visual settings
 set updatetime=50
 set colorcolumn=80
+set isfname+=@-@
 
-"Set space as the leader key
+" Set space as the leader key
 let mapleader = " "
 
-"File navigation and formatting
-nnoremap <leader>pv :Ex<CR>
+" --- File Navigation ---
+" Open file explorer (Project View in IntelliJ)
+nnoremap <leader>pv :action ActivateProjectToolWindow<CR>
 
-"Move selected lines up and down in visual mode
-vnoremap J :action MoveLineDown<CR>
-vnoremap K :action MoveLineUp<CR>
+" Find files (GotoFile in IntelliJ)
+nnoremap <leader>ff :action GotoFile<CR>
 
-"Keep cursor centered when jumping half-pages
+" Git files (RecentFiles as alternative since IntelliJ doesn't have exact git files)
+nnoremap <C-p> :action RecentFiles<CR>
+
+" Global text search (Find in Path)
+nnoremap <leader>fs :action FindInPath<CR>
+
+" Find buffers (View all open files)
+nnoremap <leader>fb :action RecentFiles<CR>
+
+" Create files/directories in Project View
+nnoremap <leader>nf :action NewFile<CR>
+nnoremap <leader>nd :action NewFolder<CR>
+nnoremap <A-n>f :action NewFile<CR>
+nnoremap <A-n>d :action NewFolder<CR>
+
+" --- Buffer Navigation (Tabs in IntelliJ) ---
+" Next tab/buffer
+nnoremap <Tab> :action NextTab<CR>
+
+" Previous tab/buffer
+nnoremap <S-Tab> :action PreviousTab<CR>
+
+" Close current tab/buffer
+nnoremap <leader>x :action CloseContent<CR>
+
+" --- Window Navigation ---
+" Navigate between splits
+nnoremap <C-h> :action PrevSplitter<CR>
+nnoremap <C-l> :action NextSplitter<CR>
+
+" Split vertically
+nnoremap <leader>| :action SplitVertically<CR>
+nnoremap <leader>\ :action SplitVertically<CR>
+
+" Split horizontally
+nnoremap <leader>- :action SplitHorizontally<CR>
+nnoremap <leader>_ :action SplitHorizontally<CR>
+
+" Unsplit all
+nnoremap <leader>us :action UnsplitAll<CR>
+
+" Move tab to right/down
+nnoremap <leader>t| :action MoveTabRight<CR>
+nnoremap <leader>t\ :action MoveTabRight<CR>
+nnoremap <leader>t- :action MoveTabDown<CR>
+nnoremap <leader>t_ :action MoveTabDown<CR>
+
+" --- Navigation & Search ---
+" Keep cursor centered when jumping
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
 
-"Keep cursor centered when navigating search results
+" Keep cursor centered when navigating search results
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-"Copy to system clipboard
+" --- Editing ---
+" Move selected lines in visual mode
+vnoremap J :action MoveLineDown<CR>
+vnoremap K :action MoveLineUp<CR>
+
+" Copy to system clipboard
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y "+Y
 
-"Delete without yanking
+" Delete without yanking
 nnoremap <leader>d "_d
 vnoremap <leader>d "_d
 
-" Basic find/replace with current word
-nnoremap <leader>s :action FindWordAtCaret<CR>:action Replace<CR>
+" Find and replace current word
+nnoremap <leader>s :action FindAndReplace<CR>
+vnoremap <leader>s :action FindAndReplace<CR>
 
-"Open the "Find Files" (Navigate > File) dialog with <leader>ff (Space + ff)
-nnoremap <leader>ff :action GotoFile<CR>
+" --- LSP / IDE Actions ---
+" Go to definition
+gd :action GotoDeclaration<CR>
 
-"Open the "Find in Path" (Global Search) dialog with <leader>fs (Space + fs)
-nnoremap <leader>fs :action FindInPath<CR>
+" Go to declaration (type definition in Neovim is mapped to gD)
+nnoremap gD :action GotoTypeDeclaration<CR>
 
-"Open the Rename Refactor dialog with <leader>rn (Space + rn)
+" Go to implementation
+nnoremap gi :action GotoImplementation<CR>
+
+" Go to references
+nnoremap gr :action FindUsages<CR>
+
+" Go to type definition (mapped to <leader>td in Neovim)
+nnoremap <leader>td :action GotoTypeDeclaration<CR>
+
+" Show hover/documentation
+nnoremap K :action QuickJavaDoc<CR>
+
+" Show signature help
+nnoremap <leader>k :action ParameterInfo<CR>
+
+" Rename symbol
 nnoremap <leader>rn :action RenameElement<CR>
 
-"Run the project with <leader>r (Space + ru)
-nnoremap <leader>rr :action Run<CR>
-
-"Run the current class"
-nnoremap <leader>ru :action RunClass<CR>
-
-"Open the "Choose Run Configuration" menu with <leader>rc (Space + rc)
-nnoremap <leader>src :action ChooseRunConfiguration<CR>
-
-"Open the "Create Run Configuration" menu with <leader>rc (Space + rc)
-nnoremap <leader>crc :action CreateRunConfiguration<CR>
-
-"Toggle the Terminal tool window with <leader>tt (Space + tt)
-nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
-
-"Move to the next tab with Ctrl + l
-nnoremap <C-l> :action NextTab<CR>
-
-"Move to the previous tab with Ctrl + h
-nnoremap <C-h> :action PreviousTab<CR>
-
-"Reload .ideavimrc file configuration
-nnoremap <leader>irc :action IdeaVim.ReloadVimRc.reload<CR>
-
-"Show Code Actions
+" Code actions
 nnoremap <leader>ca :action ShowIntentionActions<CR>
 
-"Show formatting document
-nnoremap <leader>rf :action ShowReformatFileDialog<CR>
+" Format document
+nnoremap <leader>f :action ReformatCode<CR>
 
-"Comment lines
-nnoremap <leader>cm :action CommentByLineComment<CR>
-vnoremap <leader>cm :action CommentByLineComment<CR>
+" Show diagnostics for line
+nnoremap <leader>e :action ShowErrorDescription<CR>
 
-"Debugging
-nnoremap <leader>db :action Debug<CR>
-nnoremap <leader>bp :action ToggleLineBreakpoint<CR>
-
-"Navigation (You can return to previous file using C+o)
-nnoremap gd :action GotoDeclaration<CR>
-nnoremap gD :action GotoTypeDeclaration<CR>
-nnoremap gi :action GotoImplementation<CR>
-nnoremap gr :action GotoReferences<CR>
+" Go to symbol
 nnoremap <leader>gs :action GotoSymbol<CR>
 nnoremap <leader>gS :action GotoSymbolInFile<CR>
-nnoremap K :action ParameterInfo<CR>
 
+" --- Refactoring ---
 nnoremap <leader>ec :action IntroduceConstant<CR>
 nnoremap <leader>ev :action IntroduceVariable<CR>
-nnoremap <leader>em :action ExtractFunction<CR>
+nnoremap <leader>em :action ExtractMethod<CR>
 vnoremap <leader>ef :action IntroduceField<CR>
 nnoremap <leader>ep :action IntroduceParameter<CR>
 nnoremap <leader>mo :action Move<CR>
 
-" Splits
-nnoremap <leader>| :action SplitVertically<CR>
-nnoremap <leader>\ :action SplitVertically<CR>
-nnoremap <leader>t| :action MoveTabRight<CR>
-nnoremap <leader>t\ :action MoveTabRight<CR>
+" --- Comments ---
+nnoremap <leader>cm :action CommentByLineComment<CR>
+vnoremap <leader>cm :action CommentByLineComment<CR>
 
-nnoremap <leader>- :action SplitHorizontally<CR>
-nnoremap <leader>_ :action SplitHorizontally<CR>
-nnoremap <leader>t- :action MoveTabDown<CR>
-nnoremap <leader>t_ :action MoveTabDown<CR>
+" --- Terminal ---
+nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
 
-nnoremap <leader>us :action UnsplitAll<CR>
+" --- Run & Debug ---
+" Run project
+nnoremap <leader>rr :action Run<CR>
 
-"Plugins
+" Run current class
+nnoremap <leader>ru :action RunClass<CR>
+
+" Choose run configuration
+nnoremap <leader>src :action ChooseRunConfiguration<CR>
+
+" Create run configuration
+nnoremap <leader>crc :action CreateRunConfiguration<CR>
+
+" Debug
+nnoremap <leader>db :action Debug<CR>
+
+" Toggle breakpoint
+nnoremap <leader>bp :action ToggleLineBreakpoint<CR>
+
+" --- IDE Commands ---
+" Reload .ideavimrc file configuration
+nnoremap <leader>ir :action IdeaVim.ReloadVimRc.reload<CR>
+
+" --- Plugins ---
 set surround
 set NERDTree
 
-"Open NERDTree
-nnoremap <leader>nt :NERDTree<CR>
+" Open NERDTree (Project View)
+nnoremap <leader>nt :action ProjectView<CR>
