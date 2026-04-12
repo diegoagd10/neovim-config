@@ -190,5 +190,7 @@ This repository is designed to be cloned and symlinked to standard config locati
 - `~/.config/nvim` → `/path/to/neovim-config`
 - `~/.vimrc` → `/path/to/neovim-config/.vimrc`
 - `~/.tmux.conf` → `/path/to/neovim-config/.tmux.conf`
+- `~/.config/Code/User/settings.json` → `/path/to/neovim-config/vs-settings.json`
+- `~/.config/Code/User/keybindings.json` → `/path/to/neovim-config/vs-keybindings.json`
 
 When modifying configs, edit the files in this repository - changes will automatically apply via symlinks.

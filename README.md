@@ -1,6 +1,6 @@
 # Neovim, Vim & Tmux Configuration
 
-This repository contains a modern Neovim configuration with LSP support, autocompletion, and fuzzy finding, a pure Vim configuration that mirrors the Neovim keybindings, and a comprehensive tmux configuration featuring vim-style keybindings and seamless editor integration.
+This repository contains a modern Neovim configuration with LSP support, autocompletion, and fuzzy finding, a pure Vim configuration that mirrors the Neovim keybindings, a comprehensive tmux configuration featuring vim-style keybindings and seamless editor integration, and VS Code Vim settings with consistent keybindings.
 
 **Quick Setup:** Clone this repository and symlink the configurations to keep them in sync automatically!
 
@@ -22,11 +22,15 @@ cd ~/Projects/neovim-config
 [ -d ~/.config/nvim ] && mv ~/.config/nvim ~/.config/nvim.backup
 [ -f ~/.vimrc ] && mv ~/.vimrc ~/.vimrc.backup
 [ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf.backup
+[ -f ~/.config/Code/User/settings.json ] && mv ~/.config/Code/User/settings.json ~/.config/Code/User/settings.json.backup
+[ -f ~/.config/Code/User/keybindings.json ] && mv ~/.config/Code/User/keybindings.json ~/.config/Code/User/keybindings.json.backup
 
 # Create symlinks
 ln -s ~/Projects/neovim-config ~/.config/nvim
 ln -s ~/Projects/neovim-config/.vimrc ~/.vimrc
 ln -s ~/Projects/neovim-config/.tmux.conf ~/.tmux.conf
+ln -s ~/Projects/neovim-config/vs-settings.json ~/.config/Code/User/settings.json
+ln -s ~/Projects/neovim-config/vs-keybindings.json ~/.config/Code/User/keybindings.json
 
 # Create required directories
 mkdir -p ~/.vim/undodir
@@ -358,6 +362,73 @@ sudo apt install xclip
 ```
 
 The `.vimrc` automatically detects and uses `xclip`/`xsel` if native clipboard support is unavailable.
+
+---
+
+# VS Code Setup
+
+This repository includes VS Code Vim settings and keybindings that mirror the Neovim configuration for consistency across all editors.
+
+## Installation
+
+### 1. Install VS Code
+
+Download from the official site or install via snap:
+```bash
+sudo snap install code --classic
+```
+
+### 2. Install the Vim Extension
+
+Install the [VSCodeVim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) extension:
+```bash
+code --install-extension vscodevim.vim
+```
+
+### 3. Symlink the Configuration
+
+**Recommended: Symlink to keep in sync with this repo:**
+```bash
+# Backup existing configs if you have them
+[ -f ~/.config/Code/User/settings.json ] && mv ~/.config/Code/User/settings.json ~/.config/Code/User/settings.json.backup
+[ -f ~/.config/Code/User/keybindings.json ] && mv ~/.config/Code/User/keybindings.json ~/.config/Code/User/keybindings.json.backup
+
+# Create symlinks from this repository
+ln -s ~/Projects/neovim-config/vs-settings.json ~/.config/Code/User/settings.json
+ln -s ~/Projects/neovim-config/vs-keybindings.json ~/.config/Code/User/keybindings.json
+```
+
+**Alternative: Copy the files:**
+```bash
+cp /path/to/neovim-config/vs-settings.json ~/.config/Code/User/settings.json
+cp /path/to/neovim-config/vs-keybindings.json ~/.config/Code/User/keybindings.json
+```
+
+### 4. Verify Installation
+
+Open VS Code and verify:
+- Vim mode is active (you should see `-- NORMAL --` in the status bar)
+- Press `CapsLock` to escape to normal mode
+- Press `Space` then `ca` to trigger code actions
+
+## Key Features
+
+- **Consistent Keybindings**: Same leader key (Space) and code actions as Neovim
+- **CapsLock as Escape**: Maps CapsLock to Vim escape in editor focus
+- **Tab Navigation**: Tab/Shift+Tab to cycle between editor tabs in normal mode
+- **Smart Tab**: Tab accepts inline suggestions and completions when available
+- **Vim-style Pane Navigation**: Ctrl+h/j/k/l to navigate between editor groups
+- **File Explorer Shortcuts**: `a` to create file, `Shift+a` to create folder when explorer is focused
+
+## Handled Keys
+
+The following keys are delegated to VS Code instead of Vim:
+- `Ctrl+p`: VS Code command palette / file finder
+- `Ctrl+s`: Save file
+- `Ctrl+z`: Undo (VS Code native)
+
+The following keys are handled by Vim:
+- `Ctrl+d`: Half-page down scroll
 
 ---
 
