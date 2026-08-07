@@ -4,7 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a unified configuration repository for IntelliJ IDEA (IdeaVim), VS Code (VSCodeVim), Helix, and tmux with consistent Vim-style keybindings across all tools. The repository includes:
+This is a unified configuration repository for Neovim, IntelliJ IDEA (IdeaVim), VS Code (VSCodeVim), Helix, and tmux with consistent Vim-style keybindings across all tools. The repository includes:
+- Repo-owned Neovim configuration (`nvim/`) with focused plugins, LSP, formatting, and completion
 - Cross-editor Vim keybindings for IntelliJ IDEA (`.ideavimrc`) and VS Code (`vs-settings.json`, `vs-keybindings.json`)
 - Helix editor configuration (`helix/`) with language server setup for TypeScript, JavaScript, and Python
 - Comprehensive tmux configuration (`.tmux.conf`) with vim-tmux-navigator integration
@@ -22,6 +23,14 @@ This is a unified configuration repository for IntelliJ IDEA (IdeaVim), VS Code 
 - `vs-settings.json`: VS Code Vim plugin settings
 - `vs-keybindings.json`: Custom keybindings extending VSCodeVim
 
+### Neovim
+- `nvim/init.lua`: Bootstrap and entry point for the repo-owned Neovim configuration
+- `nvim/lua/config/`: Options, keybindings, project pickers, LSP, formatting, terminal, and multicursor behavior
+- `nvim/lua/plugins.lua`: lazy.nvim plugin specifications
+- `nvim/lazy-lock.json`: Locked plugin revisions
+- Uses native Neovim LSP configuration for TypeScript/JavaScript and Python
+- `s` selects regex matches for simultaneous editing; `<C-v>` remains native visual-block editing
+
 ### Helix
 - `helix/config.toml`: Editor settings (transparent theme, relative line numbers)
 - `helix/languages.toml`: Language server configuration
@@ -38,7 +47,7 @@ This is a unified configuration repository for IntelliJ IDEA (IdeaVim), VS Code 
 
 ## Common Keybindings (Space is Leader)
 
-These keybindings are consistent across IntelliJ IDEA, VS Code, and Helix:
+These keybindings are consistent across IntelliJ IDEA, VS Code, Helix, and Neovim:
 
 ### File Navigation
 - `<leader>ff`: Find files
@@ -55,6 +64,7 @@ These keybindings are consistent across IntelliJ IDEA, VS Code, and Helix:
 - `gd`: Go to definition / declaration
 - `gD`: Go to type declaration
 - `gi`: Go to implementation
+- `gr`: Find references
 - `<leader>td`: Go to type definition
 - `K`: Show hover/documentation
 - `<leader>k`: Show signature help
@@ -68,6 +78,9 @@ These keybindings are consistent across IntelliJ IDEA, VS Code, and Helix:
 - `<leader>y`: Copy to system clipboard
 - `<leader>d`: Delete without yanking
 - `<leader>s`: Find and replace current word
+- `s` (Neovim): Regex-select matches on the current line or visual selection
+- visual `<leader>gr`: Find the selected text in the current file
+- visual `<leader>s`: Replace all literal occurrences of the selected text in the current file
 
 ### Window Management
 - `<C-h>`/`<C-l>`: Navigate between editor splits
@@ -86,11 +99,13 @@ These keybindings are consistent across IntelliJ IDEA, VS Code, and Helix:
    - IntelliJ: `<leader>ir` or Settings → Editor → Vim → Reload
    - VS Code: Changes to `vs-settings.json` apply automatically; keybindings reload on focus
    - Helix: Changes to `helix/` apply automatically on next launch
+   - Neovim: Restart Neovim after config or plugin changes; run `:Lazy sync` for plugin updates
    - Tmux: `Ctrl+Space + r` from within tmux, or `tmux source-file ~/.tmux.conf`
 
 ### Modifying Keybindings
 - IntelliJ IDEA: Edit `.ideavimrc`
 - VS Code: Edit `vs-settings.json` under `vim.normalModeKeyBindings` or `vim.visualModeKeyBindings`
+- Neovim: Edit `nvim/lua/config/keymaps.lua` or the relevant module under `nvim/lua/config/`
 - Helix: Keybindings are built-in; for customizations, check the Helix docs
 - Tmux: Edit `.tmux.conf`, then reload with `Ctrl+Space + r` or `tmux source-file ~/.tmux.conf`
 
@@ -127,5 +142,6 @@ This repository is designed to be cloned and symlinked to standard config locati
 - `~/.config/Code/User/settings.json` → `/path/to/neovim-config/vs-settings.json`
 - `~/.config/Code/User/keybindings.json` → `/path/to/neovim-config/vs-keybindings.json`
 - `~/.config/helix` → `/path/to/neovim-config/helix`
+- `~/.config/nvim` → `/path/to/neovim-config/nvim`
 
 When modifying configs, edit the files in this repository - changes will automatically apply via symlinks.
